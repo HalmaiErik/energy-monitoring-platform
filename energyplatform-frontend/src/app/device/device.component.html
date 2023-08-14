@@ -1,0 +1,116 @@
+<div class="container" id="main-container">
+
+    <button (click)="onOpenModal(null, 'add', $event)" [disabled]="!isAdmin || hasSensor">
+        <i class="fa fa-plus"></i> Add new sensor
+    </button>
+
+    <div class="row">
+        <div *ngIf="sensor != null" class="col-md-6 col-xl-3">
+            <div class="card m-b-30" (click)="goSensorLogs(sensor.id)">
+                <div class="card-body row">
+                    <div class="card-title align-self-center mb-0">
+                        <h5>{{sensor?.description}}</h5>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i>
+                        Max consumption: {{sensor?.maxValue}}</li>
+                    <li class="list-group-item"><i class="fa fa-phone float-right"></i>
+                        Device: {{deviceId}}</li>
+                </ul>
+                <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                        <a (click)="onOpenModal(sensor, 'edit', $event)" class="btn btn-primary tooltips"
+                            data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <a (click)="onDeleteSensor(sensor.id, $event)" class="btn btn-secondary tooltips"
+                            data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Add sensor Modal -->
+    <div class="modal fade" id="addSensorModal" tabindex="-1" role="dialog" aria-labelledby="addSensorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSensorModalLabel">Add sensor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" (ngSubmit)="onAddSensor(addForm)">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" ngModel name="description" class="form-control" id="description"
+                                placeholder="Description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="idDevice">Device ID</label>
+                            <input type="text" ngModel name="idDevice" class="form-control" id="idDevice"
+                            [(ngModel)]="deviceId" readonly>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="add-sensor-form" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button>
+                            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Sensor Modal -->
+    <div class="modal fade" id="editSensorModal" tabindex="-1" role="dialog" aria-labelledby="editSensorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSensorModalLabel">Edit Sensor {{editSensor?.description}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #editForm="ngForm" (ngSubmit)="onEditSensor(editForm, editSensor.id)">
+                        <div class="form-group">
+                            <label for="id">Id</label>
+                            <input type="text" ngModel name="id" class="form-control" id="id" value="{{editSensor?.id}}"
+                                readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" ngModel name="description" class="form-control" id="description"
+                                placeholder="Description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="idDevice">Device ID</label>
+                            <select class="form-control form-control-lg" ngModel name="idDevice" id="idDevice"
+                                required>
+                                <option *ngFor="let device of devices">{{device?.id}}</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="edit-sensor-form" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button>
+                            <button [disabled]="editForm.invalid" type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification for no sensor-->
+    <div *ngIf="sensor == null" class="col-lg-12 col-md-12 col-xl-12">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">NO SENSORS!</h4>
+            <p>No sensors were found.</p>
+        </div>
+    </div>
+</div>

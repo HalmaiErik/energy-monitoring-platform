@@ -1,0 +1,25 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div *ngIf="isLoggedIn">
+            <div *ngIf="isAdmin">
+                <a (click)="goAdminHome()" class="navbar-brand home" style="color:white;">
+                    Energy Platform
+                </a>
+            </div>
+            <div *ngIf="!isAdmin">
+                <a (click)="goClientHome()" class="navbar-brand home" style="color:white;">
+                    Energy Platform
+                </a>
+            </div>
+        </div>
+        <div *ngIf="!isLoggedIn">
+            <a class="navbar-brand home" style="color:white;">
+                Energy Platform
+            </a>
+        </div>
+
+        <div *ngIf="isLoggedIn">
+            <a routerLink="/login" (click)="logout()" class="float-right logout mr-2">Logout</a>
+        </div>
+    </nav>
+</header>
