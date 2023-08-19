@@ -4,4 +4,4 @@ Includes:
 1. energyplatform-backend: Backend application built with Java and Spring Boot. Deployed on Heroku. Supports user login, registration, creation of new devices for a user, a new sensor for a device and adding sensor data to sensors.  Supports reading the sensor data from a RabbitMQ. Supports RPC calls from a Smart Appliance desktop app. Containerized with Docker and deployed on Heroku. Uses REST to expose data from a PostGreSQL database to the frontend.
 2. energyplatform-frontend: Frontend application of the energy platform, built with Angular. Containerized with Docker and deployed on Heroku.
 3. sensorsimulator: Simulates a sensor by reading values from a file and posting them to a RabbitMQ in order to be processed by the backend application
-4. smartappliance: Desktop application with login feature, that draws charts, graphs from the monitored sensor data. Built with Java, Maven, Swing.
+4. smartappliance: Desktop application with login feature, that draws charts, graphs from the monitored sensor data that it gets from the energyplatform-backend, using RPC calls. Built with Java, Maven, Swing.
